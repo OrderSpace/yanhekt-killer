@@ -4,7 +4,7 @@
 // @version      1.0
 // @description  open to everyone!
 // @author       Seroz
-// @match        https://www.yanhekt.cn/course/*
+// @match        https://www.yanhekt.cn/*
 // @grant        none
 // @run-at       document-start
 // ==/UserScript==
