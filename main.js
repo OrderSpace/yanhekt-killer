@@ -36,7 +36,6 @@ function openBypass(original_function) {
 
 // function sendBypass(original_function) {
 //     return function (data) {
-//         // 保存请求相关参数
 //         this.requestData = data;
 //         return original_function.apply(this, arguments);
 //     };
