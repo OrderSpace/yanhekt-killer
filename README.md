@@ -1,6 +1,6 @@
 # yanhekt-killer
 
-# introduction
+## introduction
 
 the main.js relys on tampermonkey plugin.
 
