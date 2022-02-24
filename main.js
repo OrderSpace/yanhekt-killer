@@ -1,45 +1,26 @@
 // ==UserScript==
-// @name         yanhekt_killer
+// @name         BIT-延河课堂-Killer
 // @namespace    http://tampermonkey.net/
-// @version      1.0
+// @version      1.1.0
 // @description  open to everyone!
-// @author       Seroz
+// @author       Seroz, Y.D.X.
 // @match        https://www.yanhekt.cn/*
 // @grant        none
 // @run-at       document-start
+// @require      https://cdn.jsdelivr.net/npm/xhook@1.4.9/dist/xhook.min.js
 // ==/UserScript==
 
+(function () {
+    'use strict'
 
-function modifyResponse(response) {
-
-    if (this.readyState === 4) {
-        if (this.requestURL.indexOf("permission") != -1 && this.requestMethod.indexOf("GET") != -1) {
-            Object.defineProperty(this, "responseText", { writable: true });
-            this.responseText = '{"code":0,"message":"","data":{"allowed": true}}';
-            Object.defineProperty(this, "response", { writable: true });
-            this.response = '{"code":0,"message":"","data":{"allowed": true}}';
+    xhook.after((req, res) => {
+        if (req.url.includes('/v1/auth/permission')) {
+            res.text = res.data = JSON.stringify({
+                code: 0,
+                message: "",
+                data: { allowed: true }
+            })
         }
-    }
-}
+    })
 
-function openBypass(original_function) {
-
-    return function (method, url, async) {
-        this.requestMethod = method;
-        this.requestURL = url;
-
-        this.addEventListener("readystatechange", modifyResponse);
-        return original_function.apply(this, arguments);
-    };
-
-}
-
-// function sendBypass(original_function) {
-//     return function (data) {
-//         this.requestData = data;
-//         return original_function.apply(this, arguments);
-//     };
-// }
-
-XMLHttpRequest.prototype.open = openBypass(XMLHttpRequest.prototype.open);
-// XMLHttpRequest.prototype.send = sendBypass(XMLHttpRequest.prototype.send);
+})()
